@@ -22,6 +22,133 @@ create table ordernames (
        name text);
 Remember: In SQL, we always put string and date values inside single quotes.
 
+Queries used:
+
+#
+# Uncomment one of these QUERY variables at a time and use "Test Run" to run it.
+# You'll see the results below.  Then try your own queries as well!
+#
+
+QUERY = "select max(name) from animals;"
++-----------+
+| max(name) |
++===========+
+|       Zoe |
++-----------+
+
+QUERY = "select * from animals limit 10;"
++----------+------------+------------+
+|     name |    species |  birthdate |
++==========+============+============+
+|   Andrea |     alpaca | 2001-01-16 |
+|    Bruno |     alpaca | 2004-09-23 |
+|  Charlie |     alpaca | 2004-09-23 |
+|    Della |     alpaca | 2006-01-09 |
+|     Emma |     alpaca | 2013-03-16 |
+|     Fred | brown bear | 1993-05-02 |
+|   George | brown bear | 1997-06-24 |
+|    Molly | brown bear | 1981-10-17 |
+|  Eliezer |      camel | 1971-03-08 |
+| Giuseppe |      camel | 1979-12-25 |
++----------+------------+------------+
+
+QUERY = "select * from animals where species = 'orangutan' order by birthdate;"
++---------+-----------+------------+
+|    name |   species |  birthdate |
++=========+===========+============+
+|    Raja | orangutan | 1975-04-09 |
+| Kambing | orangutan | 1988-11-12 |
+|    Ratu | orangutan | 1989-09-15 |
+|  Putera | orangutan | 1993-06-29 |
+|   Gajah | orangutan | 2011-05-26 |
+|   Singa | orangutan | 2012-11-03 |
++---------+-----------+------------+
+
+QUERY = "select name from animals where species = 'orangutan' order by birthdate desc;"
++---------+
+|    name |
++=========+
+|   Singa |
+|   Gajah |
+|  Putera |
+|    Ratu |
+| Kambing |
+|    Raja |
++---------+
+
+QUERY = "select name, birthdate from animals order by name limit 10 offset 20;"
++---------+------------+
+|    name |  birthdate |
++=========+============+
+|   Duran | 2009-09-20 |
+| Ekwensu | 1993-10-31 |
+|     Eli | 2002-02-22 |
+| Eliezer | 1971-03-08 |
+|    Emma | 2013-03-16 |
+|    Emmy | 2008-04-15 |
+|    Fido | 1999-08-04 |
+| Francis | 1996-04-27 |
+|    Fred | 1993-05-02 |
+|   Gajah | 2011-05-26 |
++---------+------------+
+
+QUERY = "select species, min(birthdate) from animals group by species;"
++------------+----------------+
+|    species | min(birthdate) |
++============+================+
+|     alpaca |     2001-01-16 |
+| brown bear |     1981-10-17 |
+|      camel |     1971-03-08 |
+|      dingo |     1999-08-04 |
+|    echidna |     2003-01-31 |
+|     ferret |     2006-09-18 |
+|    gorilla |     1979-07-04 |
+|      hyena |     2007-06-08 |
+|     iguana |     1999-09-09 |
+|     jackal |     2003-12-21 |
+|      llama |     1984-01-05 |
+|   mongoose |     2006-02-28 |
+|      moose |     1990-03-27 |
+|    narwhal |     1975-02-07 |
+|  orangutan |     1975-04-09 |
+|   platypus |     2000-04-13 |
+|    raccoon |     2009-08-11 |
+|   sea lion |     1987-04-29 |
+|    unicorn |     1752-05-20 |
+|    warthog |     2007-05-20 |
+|        yak |     1996-09-20 |
+|      zebra |     1989-03-15 |
++------------+----------------+
+
+QUERY = '''
+select name, count(*) as num from animals
+group by name
+order by num desc
+limit 5;
+'''
++---------+-----+
+|    name | num |
++=========+=====+
+|  George |   4 |
+|  Andrea |   2 |
+| Charlie |   2 |
+|    John |   2 |
+|     Max |   2 |
++---------+-----+
+
+QUERY = '''
+select food, count(animals.name) as num
+from diet, animals
+where diet.species = animals.species
+group by food
+having num = 1
+'''
++--------+-----+
+|   food | num |
++========+=====+
+| snakes |   1 |
++--------+-----+
+
 
 animals
 This table lists individual animals in the zoo. Each animal has only one row. There may be multiple animals with the same name, or even multiple animals with the same name and species.
