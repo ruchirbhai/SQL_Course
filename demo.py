@@ -35,6 +35,27 @@ cursor.execute('INSERT INTO todos (id, description) VALUES '
 
 cursor.execute(SQL, data)
 
+cursor.execute('INSERT INTO todos (id, description) VALUES '
+               '(%s, %s);', (3, True))
+
+# Read the data inserted on the database
+
+cursor.execute('SELECT * from todos;')
+
+# result = cursor.fetchall()
+# Use fetchmany instead of fetchall
+result = cursor.fetchmany(2)
+print('fetchmany', result)
+
+# use fetchone to understand the difference
+result2 = cursor.fetchone()
+print('fetchone', result2)
+
+# Execute a Select query again so that a new fetch pipline is ready
+cursor.execute('SELECT * from todos;')
+result3 = cursor.fetchone()
+print('fetchone', result3)
+
 # commit, so it does the executions on the db and persists in the db
 connection.commit()
 
